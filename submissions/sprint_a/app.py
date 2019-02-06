@@ -10,6 +10,7 @@ def generate_epithets():
     # return render_template('insults.html')
     return jsonify({"epithets":[]})
 
+
 @app.route('/vocabulary')
 def vocabulary():
     # return render_template('vocab.html')
