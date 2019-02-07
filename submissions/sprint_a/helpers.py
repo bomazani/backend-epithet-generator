@@ -1,3 +1,5 @@
+import os
+import json
 class FileManager:
     """Handle local file system IO."""
 
@@ -8,6 +10,7 @@ class FileManager:
 
     @staticmethod
     def read_json(path, mode='r', *args, **kwargs):
+        """Read json file from file path."""
         with open(path, mode=mode, *args, **kwargs) as handle:
             return json.load(handle)
 
