@@ -1,8 +1,9 @@
+import unittest
 from flask import Flask, render_template, jsonify
+# import flask
+from sprint_a import app
 
-from sprint_a import app #??????
-
-app = Flask(__name__)
+# app = Flask(__name__)
 
 @app.route('/')
 @app.route('/home')
@@ -15,5 +16,7 @@ def vocabulary():
     # return render_template('vocab.html')
     return jsonify({"vocabulary": {}})
 
+
 if __name__ == '__main__':
-    app.run()
+    # app.run()
+    unittest.app()

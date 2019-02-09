@@ -22,12 +22,14 @@ class Vocabulary:
 
     @classmethod
     def from_file(cls, path, *args, **kwargs):
+        """ """
         extension = cls.files.get_extension(path)
         representation = cls.strategies(extension)(path, *args, **kwargs)
         return representation
 
     @classmethod
     def from_json(cls, path, fields=True, *args, **kwargs):
+        """ """
         data = cls.files.read_json(path, *args, **kwargs)
         if fields:
             representation = (data, data.keys())
@@ -37,6 +39,25 @@ class Vocabulary:
 
     @classmethod
     def strategies(cls, file_extension, intent='read'):
+        """ """
         input_strategies = {'json': cls.from_json}
         if intent is 'read':
             return input_strategies[file_extension]
+
+
+class EpithetGenerator:
+    """Generate epithet from dictionary of adjective & nouns."""
+
+    vocab = Vocabulary()
+    print(vocab)
+
+    @classmethod
+    def random_words(vocab):
+        """Select one random word from each column of the list."""
+        pass
+
+    @classmethod
+    def generate_epithet(vocab, quantity):
+        """Generate a quantity of epithets from vocabulary list"""
+        print(vocab)
+        # pass
