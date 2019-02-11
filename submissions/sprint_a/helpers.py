@@ -17,8 +17,8 @@ class FileManager:
 
 class Vocabulary:
     """Standardize vocabulary representation from multiple sources."""
-
     files = FileManager()
+    
 
     @classmethod
     def from_file(cls, path, *args, **kwargs):
@@ -35,6 +35,7 @@ class Vocabulary:
             representation = (data, data.keys())
         else:
             representation = data
+        # print('representation: {}'.format(representation))
         return representation
 
     @classmethod
@@ -46,18 +47,18 @@ class Vocabulary:
 
 
 class EpithetGenerator:
-    """Generate epithet from dictionary of adjective & nouns."""
-
+    """Generate epithet from dictionary of adjectives & nouns."""
     vocab = Vocabulary()
-    print(vocab)
+    # print(vocab())
 
     @classmethod
-    def random_words(vocab):
+    def random_words(cls, vocab):
         """Select one random word from each column of the list."""
         pass
 
     @classmethod
-    def generate_epithet(vocab, quantity):
+    def generate_epithet(cls, path, quantity=1):
         """Generate a quantity of epithets from vocabulary list"""
-        print(vocab)
-        # pass
+
+        return 'Hello World!, Tis a beautiful day indeed...'
+        
