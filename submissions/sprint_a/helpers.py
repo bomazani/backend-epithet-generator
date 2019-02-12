@@ -1,5 +1,10 @@
 import os
 import json
+import random
+from sprint_a import app, RESOURCES_ROOT
+
+json_path = os.path.join(RESOURCES_ROOT, 'data.json')
+
 class FileManager:
     """Handle local file system IO."""
 
@@ -49,16 +54,26 @@ class Vocabulary:
 class EpithetGenerator:
     """Generate epithet from dictionary of adjectives & nouns."""
     vocab = Vocabulary()
-    # print(vocab())
+    data, column_names = vocab.from_file(json_path)
 
     @classmethod
-    def random_words(cls, vocab):
+    def random_words(cls):
         """Select one random word from each column of the list."""
-        pass
+        """random.choice() & Map()"""
+        # map through the keys in the list then random.choice through each list associated with each key/column & append to words list
+        # print(random.choice()) # enter in data from each separate column
+        words = [random.choice(cls.data[i]) for i in cls.column_names]
+
+        print('data: {}'.format(cls.data))
+        print('column_names: {}'.format(cls.column_names))
+        print('words: {}'.format(words))
+        return words
 
     @classmethod
     def generate_epithet(cls, path, quantity=1):
         """Generate a quantity of epithets from vocabulary list"""
-
-        return 'Hello World!, Tis a beautiful day indeed...'
+        epithet_words = cls.random_words()
+        epithet_statement = ""
+        
+        return cls.random_words()
         
