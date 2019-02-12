@@ -53,8 +53,8 @@ class Vocabulary:
 
 class EpithetGenerator:
     """Generate epithet from dictionary of adjectives & nouns."""
-    vocab = Vocabulary()
-    data, column_names = vocab.from_file(json_path)
+
+    data, column_names = Vocabulary.from_file(json_path)
 
     @classmethod
     def random_words(cls):
@@ -70,10 +70,23 @@ class EpithetGenerator:
         return words
 
     @classmethod
+    def epithet_vocabulary(cls, data, column_names):
+        """Return vocabulary available to the epithet generator """
+        return cls.data
+        
+    @classmethod
     def generate_epithet(cls, path, quantity=1):
-        """Generate a quantity of epithets from vocabulary list"""
+        """Generate a single epithet from 3 randomly selected vocabulary words"""
         epithet_words = cls.random_words()
-        epithet_statement = ""
-        
-        return cls.random_words()
-        
+        epithet = ("Thou {}, {} {}!".format(epithet_words[0], epithet_words[1], epithet_words[2]))
+        return epithet
+
+    @classmethod
+    def multiple_epithets(cls, path, quantity=3):
+        """Generate a quantity of epithets based on the quantity provided"""
+        multi_epithets = []
+        i = 1
+        while i<= quantity:
+            multi_epithets.append(cls.generate_epithet(path))
+            i += 1
+        return multi_epithets
