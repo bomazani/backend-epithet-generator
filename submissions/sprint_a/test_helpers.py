@@ -4,6 +4,8 @@ import random
 from . import helpers
 from .app import app
 from .helpers import json_path, FileManager
+from unittest.mock import patch
+
 
 quantity = 3
 column_names = ["Column 1", "Column 2", "Column 3"]
@@ -58,6 +60,18 @@ class TestHelpers:
         result = helpers.EpithetGenerator.multiple_epithets(path, quantity) 
         assert len(result) != quantity + 1
 
+    @patch('random.randint', return_value = 5)
+    def test_random_epithets(self, x):
+        result = helpers.EpithetGenerator.random_epithets(path) 
+        assert len(result) == 5
+
+    def test_random_epithets(self):
+        result = helpers.EpithetGenerator.random_epithets(path) 
+        assert len(result) > 1 and len(result) < 50
+
+    def test_random_epithets_fail(self):
+        result = helpers.EpithetGenerator.random_epithets(path) 
+        pass
 
 class TestRoutes:
     client = app.test_client()
@@ -70,20 +84,28 @@ class TestRoutes:
         result = self.client.get('/')
         assert result.status_code != 404
 
-    def test_multiple_epithets(self):
+    def test_epithets(self):
         result = self.client.get('/epithets/4')
         assert result.status_code == 200
 
-    def test_multiple_epithets_fail(self):
+    def test_epithets_fail(self):
         result = self.client.get('/epithets/4')
         assert result.status_code != 404
 
-    def test_multiple_epithets_default(self):
+    def test_epithets_default(self):
         result = self.client.get('/epithets')
         assert result.status_code == 200
 
-    def test_multiple_epithets_default_fail(self):
+    def test_epithets_default_fail(self):
         result = self.client.get('/epithets')
+        assert result.status_code != 404
+
+    def test_random(self):
+        result = self.client.get('/random')
+        assert result.status_code == 200
+
+    def test_random_fail(self):
+        result = self.client.get('/random')
         assert result.status_code != 404
 
     def test_vocabulary(self):

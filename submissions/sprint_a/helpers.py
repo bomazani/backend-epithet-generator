@@ -79,3 +79,13 @@ class EpithetGenerator:
             multi_epithets.append(cls.generate_epithet(path))
             i += 1
         return multi_epithets
+
+    @classmethod
+    def random_epithets(cls, path):
+        """Generate a random quantity of epithets (between 1 and 50)"""
+        random_qty = random.randint(1,50)
+        random_epithets = []
+        for i in range(random_qty):
+            random_epithets.append(cls.generate_epithet(path))
+        return random_epithets
+
