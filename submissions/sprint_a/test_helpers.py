@@ -1,50 +1,39 @@
-# import unittest
+import os
 import pytest
+import random
 from . import helpers
-from .helpers import json_path
 from .app import app
+from .helpers import json_path, FileManager
 
-# path =  "/Users/roberthunt/python/backend-epithet-generator/submissions/sprint_a/test_helpers.py"
 quantity = 3
-vocab = ['a flesh wound']
+column_names = ["Column 1", "Column 2", "Column 3"]
+path = json_path
 
+""" $ pytest --disable-warnings """
 class TestHelpers:
 
     def test_random_words(self):
-        result = helpers.random_words(vocab) 
-        assert result == 'village idiot'
+        result = helpers.EpithetGenerator.random_words()
+        assert result[0] in FileManager.read_json(path)['Column 1']
+        assert result[1] in FileManager.read_json(path)['Column 2']
+        assert result[2] in FileManager.read_json(path)['Column 3']
 
     def test_epithet_vocabulary(self):
-        result = helpers.epithet_vocabulary(vocab) 
-        self.assertEqual(result, 'village idiot2')
+        result = helpers.EpithetGenerator.epithet_vocabulary(json_path, column_names) 
+        assert result == FileManager.read_json(path)
 
     def test_generate_epithet(self):
-        result = helpers.generate_epithet(vocab, quantity) 
-        self.assertEqual(result, 'a flesh wound')
+        result = helpers.EpithetGenerator.generate_epithet(json_path)
+        result = result.replace(',', '')
+        result = result.replace('!', '')
+        assert result.split(' ')[1] in FileManager.read_json(json_path)['Column 1']
+        assert result.split(' ')[2] in FileManager.read_json(json_path)['Column 2']
+        assert result.split(' ')[3] in FileManager.read_json(json_path)['Column 3']
 
     def test_multiple_epithets(self):
-        result = helpers.multiple_epithets(vocab) 
-        self.assertEqual(result, 'village idiot3')
+        result = helpers.EpithetGenerator.multiple_epithets(path, quantity) 
+        assert len(result) == quantity
 
-    # def test_get_extension(self):
-    #     result = helpers.get_extension(path)
-    #     self.assertEqual(result, 'blancmange')
-    
-    # def test_read_json(self):
-    #     resut = helpers.read_json(path, mode='r', *args, **kwargs)
-    #     self.assertEqual(result, 'albatross')
-
-    # def test_from_file(self):
-    #     result = helpers.from_file(path, *args, **kwargs) 
-    #     self.assertEqual(result, 'Dennis Moore')
-
-    # def test_from_json(self):
-    #     result = helpers.from_json(path, fields=True, *args, **kwargs) 
-    #     self.assertEqual(result, 'Comfy chair')
-
-    # def test_strategies(self):
-    #     result = helpers.strategies(file_extension, intent='read') 
-    #     self.assertEqual(result, 'lupins')
 
 class TestRoutes:
     client = app.test_client()
@@ -54,17 +43,13 @@ class TestRoutes:
         assert result.status_code == 200
     
     def test_multiple_epithets(self):
-        result = self.client.get('/epithet/4')
+        result = self.client.get('/epithets/4')
         assert result.status_code == 200
 
-    def test_multiple_epithets(self):
-        result = self.client.get('/epithet/')
+    def test_multiple_epithets_default(self):
+        result = self.client.get('/epithets')
         assert result.status_code == 200
 
-    def test_root(self):
+    def test_vocabulary(self):
         result = self.client.get('/vocabulary')
         assert result.status_code == 200
-
-
-# if __name__ == '__main__':
-#     unittest.main()

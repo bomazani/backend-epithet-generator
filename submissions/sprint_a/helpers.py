@@ -1,7 +1,6 @@
 import json
 import os
 import random
-import unittest
 
 from .initialize import app, RESOURCES_ROOT
 
@@ -28,14 +27,12 @@ class Vocabulary:
     
     @classmethod
     def from_file(cls, path, *args, **kwargs):
-        """ """
         extension = cls.files.get_extension(path)
         representation = cls.strategies(extension)(path, *args, **kwargs)
         return representation
 
     @classmethod
     def from_json(cls, path, fields=True, *args, **kwargs):
-        """ """
         data = cls.files.read_json(path, *args, **kwargs)
         if fields:
             representation = (data, data.keys())
@@ -45,7 +42,6 @@ class Vocabulary:
 
     @classmethod
     def strategies(cls, file_extension, intent='read'):
-        """ """
         input_strategies = {'json': cls.from_json}
         if intent is 'read':
             return input_strategies[file_extension]
@@ -69,7 +65,6 @@ class EpithetGenerator:
         
     @classmethod
     def generate_epithet(cls, path):
-    # def generate_epithet(cls, path):
         """Generate a single epithet from 3 randomly selected vocabulary words"""
         epithet_words = cls.random_words()
         epithet = ("Thou {}, {} {}!".format(epithet_words[0], epithet_words[1], epithet_words[2]))
