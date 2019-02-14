@@ -1,5 +1,4 @@
 import os
-import unittest
 
 from flask import Flask, render_template, jsonify
 
@@ -10,10 +9,6 @@ data = Epgen.data
 column_names = Epgen.column_names
 json_path = os.path.join(RESOURCES_ROOT, 'data.json')
 
-""" pipenv shell """
-""" exit """
-""" flask run """
-""" control + c """
 
 @app.route('/')
 def generate_epithets():
