@@ -1,7 +1,9 @@
-import os
 import json
+import os
 import random
-from sprint_a import app, RESOURCES_ROOT
+import unittest
+
+from .initialize import app, RESOURCES_ROOT
 
 json_path = os.path.join(RESOURCES_ROOT, 'data.json')
 
@@ -24,7 +26,6 @@ class Vocabulary:
     """Standardize vocabulary representation from multiple sources."""
     files = FileManager()
     
-
     @classmethod
     def from_file(cls, path, *args, **kwargs):
         """ """
@@ -40,7 +41,6 @@ class Vocabulary:
             representation = (data, data.keys())
         else:
             representation = data
-        # print('representation: {}'.format(representation))
         return representation
 
     @classmethod
@@ -59,14 +59,7 @@ class EpithetGenerator:
     @classmethod
     def random_words(cls):
         """Select one random word from each column of the list."""
-        """random.choice() & Map()"""
-        # map through the keys in the list then random.choice through each list associated with each key/column & append to words list
-        # print(random.choice()) # enter in data from each separate column
         words = [random.choice(cls.data[i]) for i in cls.column_names]
-
-        print('data: {}'.format(cls.data))
-        print('column_names: {}'.format(cls.column_names))
-        print('words: {}'.format(words))
         return words
 
     @classmethod
@@ -75,14 +68,15 @@ class EpithetGenerator:
         return cls.data
         
     @classmethod
-    def generate_epithet(cls, path, quantity=1):
+    def generate_epithet(cls, path):
+    # def generate_epithet(cls, path):
         """Generate a single epithet from 3 randomly selected vocabulary words"""
         epithet_words = cls.random_words()
         epithet = ("Thou {}, {} {}!".format(epithet_words[0], epithet_words[1], epithet_words[2]))
         return epithet
 
     @classmethod
-    def multiple_epithets(cls, path, quantity=3):
+    def multiple_epithets(cls, path, quantity):
         """Generate a quantity of epithets based on the quantity provided"""
         multi_epithets = []
         i = 1
