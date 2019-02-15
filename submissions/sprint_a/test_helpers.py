@@ -6,7 +6,6 @@ from .app import app
 from .helpers import json_path, FileManager
 from unittest.mock import patch
 
-
 quantity = 3
 column_names = ["Column 1", "Column 2", "Column 3"]
 path = json_path
