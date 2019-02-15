@@ -55,7 +55,7 @@ class EpithetGenerator:
     @classmethod
     def random_words(cls):
         """Select one random word from each column of the list."""
-        words = [random.choice(cls.data[i]) for i in cls.column_names]
+        words = [random.choice(cls.data[name]) for name in cls.column_names]
         return words
 
     @classmethod
